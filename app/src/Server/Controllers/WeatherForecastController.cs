@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using webapp.Shared;
+using SerilogTimings;
 
 namespace webapp.Server.Controllers;
 
@@ -22,7 +23,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public IEnumerable<WeatherForecast> Get()
     {
-        _logger.LogWarning($"Sample warning {System.Guid.NewGuid()}");
+        using (Operation.Time("Retriving weather forecast."))
         
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
